@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Aqua Store</title>
+    <style>
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 20, 80, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 100, 255, 0.1) 0%, transparent 20%);
+        }
+        
+        /* Container Utama */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 150, 255, 0.3);
+        }
+        
+        .store-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ffffff;
+            text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #00aaff;
+            letter-spacing: 2px;
+        }
+        
+        /* Card Styling */
+        .card {
+            background: rgba(15, 15, 25, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 100, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.4);
+            border-color: rgba(0, 150, 255, 0.4);
+            transform: translateY(-5px);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #00aaff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            font-size: 1.8rem;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .payment-method {
+            background: rgba(20, 20, 30, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #00aaff;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            background: rgba(25, 25, 40, 0.9);
+            transform: translateX(5px);
+        }
+        
+        .method-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #00aaff;
+        }
+        
+        .method-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .method-label {
+            color: #a0a0a0;
+        }
+        
+        .method-value {
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        /* QR Code Section */
+        .qr-section {
+            text-align: center;
+        }
+        
+        .qr-button {
+            background: linear-gradient(135deg, #0066cc, #00aaff);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 100, 255, 0.3);
+        }
+        
+        .qr-button:hover {
+            background: linear-gradient(135deg, #0055aa, #0099ee);
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.6);
+            transform: translateY(-3px);
+        }
+        
+        .qr-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(10, 10, 20, 0.9);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+        }
+        
+        .qr-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.3);
+        }
+        
+        .qr-info {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #606060;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0, 150, 255, 0.2);
+            width: 100%;
+        }
+        
+        /* Animasi */
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff;
+            }
+            50% {
+                text-shadow: 0 0 15px #00aaff, 0 0 20px #00aaff;
+            }
+            100% {
+                text-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff;
+            }
+        }
+        
+        .glow-text {
+            animation: glow 2s infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .store-name {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="store-name glow-text">AQUA STORE</h1>
+            <p class="subtitle">Pembayaran Nasional</p>
+        </header>
+        
+        <main>
+            <div class="card">
+                <h2 class="card-title">Metode Pembayaran</h2>
+                <div class="payment-methods">
+                    <div class="payment-method">
+                        <div class="method-name">DANA</div>
+                        <div class="method-detail">
+                            <span class="method-label">Nomor:</span>
+                            <span class="method-value">089507245510</span>
+                        </div>
+                        <div class="method-detail">
+                            <span class="method-label">A/N:</span>
+                            <span class="method-value">FACHLEVI</span>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-method">
+                        <div class="method-name">GOPAY</div>
+                        <div class="method-detail">
+                            <span class="method-label">Nomor:</span>
+                            <span class="method-value">089507245510</span>
+                        </div>
+                        <div class="method-detail">
+                            <span class="method-label">A/N:</span>
+                            <span class="method-value">FACHLEVI</span>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-method">
+                        <div class="method-name">OVO</div>
+                        <div class="method-detail">
+                            <span class="method-label">Nomor:</span>
+                            <span class="method-value">089507245510</span>
+                        </div>
+                        <div class="method-detail">
+                            <span class="method-label">A/N:</span>
+                            <span class="method-value">FACHLEVI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card qr-section">
+                <h2 class="card-title">QR Code Pembayaran</h2>
+                <button class="qr-button" id="showQR">Tampilkan QR Code</button>
+                
+                <div class="qr-container" id="qrContainer">
+                    <img src="1001036799.jpg" alt="QR Code Pembayaran" class="qr-image">
+                    <div class="qr-info">
+                        <p>NMID: ID1025445163740</p>
+                        <p>Dicetak oleh: 93600915</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p>&copy; 2023 Aqua Store. Semua hak dilindungi.</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.getElementById('showQR').addEventListener('click', function() {
+            const qrContainer = document.getElementById('qrContainer');
+            if (qrContainer.style.display === 'block') {
+                qrContainer.style.display = 'none';
+                this.textContent = 'Tampilkan QR Code';
+            } else {
+                qrContainer.style.display = 'block';
+                this.textContent = 'Sembunyikan QR Code';
+            }
+        });
+    </script>
+</body>
+</html>
